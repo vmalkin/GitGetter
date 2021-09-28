@@ -4,7 +4,7 @@ import github.GithubException
 from github import Github
 from collections import Counter
 from time import time
-from plotly import graph_objects as go
+import plotly.graph_objects as go
 
 
 
@@ -15,13 +15,13 @@ with open("../git.token") as g:
 g = Github(git_token)
 
 repo_names = [
-    "BIT-Studio-2/project-21s2-buddy-on-the-beach",
-    "BIT-Studio-2/project-21s2-ark-tech",
-    "BIT-Studio-2/project-21s2-beach-boys",
-    "BIT-Studio-2/project-21s2-beach-buddy",
-    "BIT-Studio-2/project-21s2-jackal",
-    "BIT-Studio-2/project-21s2-paw-patrol",
-    "BIT-Studio-2/project-21s2-sea-dogs",
+    # "BIT-Studio-2/project-21s2-buddy-on-the-beach",
+    # "BIT-Studio-2/project-21s2-ark-tech",
+    # "BIT-Studio-2/project-21s2-beach-boys",
+    # "BIT-Studio-2/project-21s2-beach-buddy",
+    # "BIT-Studio-2/project-21s2-jackal",
+    # "BIT-Studio-2/project-21s2-paw-patrol",
+    # "BIT-Studio-2/project-21s2-sea-dogs",
     "BIT-Studio-2/project-21s2-walkeez"
     ]
 
@@ -72,7 +72,8 @@ def display_commits_all_branches(repo):
 
 def display_member_commit_times(repo):
     print("\n### COMMIT FREQUENCY")
-    tally = []
+    times = []
+    coder = []
 
     # First get all branches for the repo
     branches = repo.get_branches()
@@ -87,22 +88,31 @@ def display_member_commit_times(repo):
                     author = "INVALID CONTRIBUTOR"
                 else:
                     author = commit.author.login
-
-                tally.append(author)
-
-                linkname = "[" + author + "]"
-                linkurl = "(" + commit.html_url + ")"
-                url = linkname + linkurl
-                comms = [str(header_keys['last-modified']), url, str(commit.author)]
+                times.append(str(header_keys['last-modified']))
+                coder.append(author)
         except github.GithubException:
             print("Error: no commits")
+    return [times, coder]
 
 
-
-
-def convertGMTtoNZ(timestring):
+def posix_to_nzst(timestring):
     # Timestring is GMT
     timeformat = '%a, %d %b %Y %H:%M:%S GMT'
+
+
+def gmt_to_posix(timestring):
+    # Timestring is GMT
+    timeformat = '%a, %d %b %Y %H:%M:%S GMT'
+
+
+def plot_frequency(team_name, times, names):
+    n = Counter(names).keys()
+    coders = []
+    for item in names:
+        coders.append(item)
+
+
+
 
 
 if __name__ == '__main__':
@@ -119,7 +129,8 @@ if __name__ == '__main__':
 
         display_group_members(repo)
         display_commits_all_branches(repo)
-        # display_member_commit_times(repo)
+        plotdata = display_member_commit_times(repo)
+        plot_frequency(name, plotdata[0], plotdata[1])
         print("---")
 
 
