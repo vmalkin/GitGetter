@@ -2,7 +2,7 @@
 # their contributors and their work. Data will be displayed graphically.
 import github.GithubException
 from github import Github
-from pprint import pprint
+from collections import Counter
 
 
 
@@ -32,8 +32,8 @@ def displayGroupMembers(repo):
 
 
 def displayMemberCommitsAllBranches(repo):
-
     print("\n###COMMITS ALL BRANCHES")
+    tally = []
 
     # First get all branches for the repo
     branches = repo.get_branches()
@@ -49,13 +49,21 @@ def displayMemberCommitsAllBranches(repo):
                 else:
                     author = commit.author.login
 
+                tally.append(author)
+
                 linkname = "[" + author + "]"
                 linkurl = "(" + commit.html_url + ")"
                 url = linkname + linkurl
                 comms = [str(header_keys['last-modified']), url, str(commit.author)]
                 print(comms)
+
         except github.GithubException:
             print("Error: no commits")
+    print("=============================================================")
+    print("\nTOTAL COMMITS BY CONTRIBUTORS")
+    print(Counter(tally))
+    print("=============================================================")
+
 
 
 def convertGMTtoNZ(timestring):
