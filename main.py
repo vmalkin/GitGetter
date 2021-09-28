@@ -146,9 +146,9 @@ def plot_frequency(team_name, times, names):
 
 
 if __name__ == '__main__':
-    project_start = "2020-09-13"
-    project_start_posix = posix2utc(project_start, '%Y-%m-%d')
-    project_time_now = time()
+    # project_start = "2020-09-13"
+    # project_start_posix = posix2utc(project_start, '%Y-%m-%d')
+    # project_time_now = time()
 
     print("Convert Markdown to HTML: https://dillinger.io/")
     for name in repo_names:
@@ -169,10 +169,10 @@ if __name__ == '__main__':
         print("---")
 
 
-    time_end = time()
-    print("Finished!")
-    project_elapsed_days = round((project_time_now - project_start) / 86400, 1)
-    print("Project has been running for " + project_elapsed_days + " days")
+    # time_end = time()
+    # print("Finished!")
+    # project_elapsed_days = round((project_time_now - project_start) / 86400, 1)
+    # print("Project has been running for " + project_elapsed_days + " days")
 
 
 
