@@ -54,7 +54,7 @@ if __name__ == '__main__':
                 linkname = "[" + str(commit.author) + "]"
                 linkurl = "(" + commit.html_url + ")"
                 url = linkname + linkurl
-                comms = [str(header_keys['last-modified']),  url, commit.author]
+                comms = [str(header_keys['last-modified']),  url, str(commit.author)]
                 c.append(comms)
         except github.GithubException:
             print("Error: no commits")
@@ -62,7 +62,7 @@ if __name__ == '__main__':
         # sort on student login
         c.sort(key=lambda c: c[2])
         for item in c:
-            print(item)
+            print(item[0], item[1], item[2])
 
         # print("PULL REQUESTS\n")
         # pulls = repo.get_pulls()
