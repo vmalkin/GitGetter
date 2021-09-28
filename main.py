@@ -41,7 +41,7 @@ if __name__ == '__main__':
         print("###GROUP MEMBERS\n")
         users = repo.get_contributors()
         for user in users:
-            peeps = str(user) + " " +  str(user.last_modified) + " " +  str(user.name)
+            peeps = str(user) + " " +  str(user.last_modified) + " " +  str(user.name) + "\n"
             print(peeps)
 
         c = []
@@ -60,9 +60,9 @@ if __name__ == '__main__':
             print("Error: no commits")
 
         # sort on student login
-        c.sort(key=lambda c: c[2])
+        c.sort(key=lambda c: (c[2], c[0]))
         for item in c:
-            print(item[0], item[1], item[2])
+            print(item[0], item[1], item[2], "\n")
 
         # print("PULL REQUESTS\n")
         # pulls = repo.get_pulls()
