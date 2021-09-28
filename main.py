@@ -3,6 +3,7 @@
 import github.GithubException
 from github import Github
 from collections import Counter
+from time import time
 
 
 
@@ -24,7 +25,7 @@ repo_names = [
     ]
 
 def displayGroupMembers(repo):
-    print("\n###GROUP MEMBERS")
+    print("\n### GROUP MEMBERS")
     users = repo.get_contributors()
     for user in users:
         peeps = str(user) + " " + str(user.last_modified) + " " + str(user.name) + "\n"
@@ -32,13 +33,13 @@ def displayGroupMembers(repo):
 
 
 def displayMemberCommitsAllBranches(repo):
-    print("\n###COMMITS ALL BRANCHES")
+    print("\n### COMMITS ALL BRANCHES")
     tally = []
 
     # First get all branches for the repo
     branches = repo.get_branches()
     for branch in branches:
-        print("\n###BRANCH: " + branch.name)
+        print("\n### BRANCH: " + branch.name)
         commits = repo.get_commits(branch.name)
         try:
             for commit in commits:
@@ -60,7 +61,7 @@ def displayMemberCommitsAllBranches(repo):
         except github.GithubException:
             print("Error: no commits")
     print("=============================================================")
-    print("\nTOTAL COMMITS BY CONTRIBUTORS")
+    print("\n### TOTAL COMMITS BY CONTRIBUTORS")
     print(Counter(tally))
     print("=============================================================")
 
@@ -72,6 +73,7 @@ def convertGMTtoNZ(timestring):
 
 
 if __name__ == '__main__':
+    time_start = time()
     # with open("Studio_2.txt", "w") as s:
     print("Convert Markdown to HTML: https://dillinger.io/")
     for name in repo_names:
@@ -79,7 +81,7 @@ if __name__ == '__main__':
         linkname = "[" + name + "]"
         linkurl = "(" + repo_name + ")"
 
-        print("##" + linkname + linkurl)
+        print("## " + linkname + linkurl)
         repo = g.get_repo(name)
 
         displayGroupMembers(repo)
@@ -105,8 +107,10 @@ if __name__ == '__main__':
 
         print("==================" + "END" + "==================\n\n")
     # s.close()
-
+    time_end = time()
     print("Finished!")
+    time_elapsed = round((time_end - time_start) / 60, 2)
+    print("Elapsed time: " + str(time_elapsed) + " minutes")
 
 
 
