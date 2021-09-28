@@ -34,7 +34,6 @@ def display_group_members(repo):
 
 
 def display_commits_all_branches(repo):
-    print("---")
     print("\n### COMMITS ALL BRANCHES")
     tally = []
 
@@ -72,7 +71,6 @@ def display_commits_all_branches(repo):
 
 
 def display_member_commit_times(repo):
-    print("---")
     print("\n### COMMIT FREQUENCY")
     tally = []
 
@@ -122,6 +120,8 @@ if __name__ == '__main__':
         display_group_members(repo)
         display_commits_all_branches(repo)
         # display_member_commit_times(repo)
+        print("---")
+
 
         # print("OPEN ISSUES\n")
         # open_issues = repo.get_issues(state="open")
