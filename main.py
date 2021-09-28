@@ -5,7 +5,7 @@ from github import Github
 from collections import Counter
 from time import time
 import plotly.graph_objects as go
-
+import datetime
 
 
 with open("../git.token") as g:
@@ -104,6 +104,11 @@ def gmt_to_posix(timestring):
     # Timestring is GMT
     timeformat = '%a, %d %b %Y %H:%M:%S GMT'
 
+def posix2utc(posixtime, timeformat):
+    # '%Y-%m-%d %H:%M'
+    utctime = datetime.datetime.utcfromtimestamp(int(posixtime)).strftime(timeformat)
+    return utctime
+
 
 def plot_frequency(team_name, times, names):
     n = Counter(names).keys()
@@ -111,13 +116,19 @@ def plot_frequency(team_name, times, names):
     for item in names:
         coders.append(item)
 
+    times.reverse()
+    names.reverse()
 
-
+    fig = go.Figure(go.Bar(x=times, y=names))
+    fig.update_layout(barmode='group')
+    fig.show()
 
 
 if __name__ == '__main__':
-    time_start = time()
-    # with open("Studio_2.txt", "w") as s:
+    # project_start = "2020-09-13"
+    # project_start_posix = posix2utc(project_start, '%Y-%m-%d')
+    # project_time_now = time()
+
     print("Convert Markdown to HTML: https://dillinger.io/")
     for name in repo_names:
         repo_name = "http://github.com/" + name
@@ -130,30 +141,15 @@ if __name__ == '__main__':
         display_group_members(repo)
         display_commits_all_branches(repo)
         plotdata = display_member_commit_times(repo)
-        plot_frequency(name, plotdata[0], plotdata[1])
+        # plot_frequency(name, plotdata[0], plotdata[1])
+
         print("---")
-
-
-        # print("OPEN ISSUES\n")
-        # open_issues = repo.get_issues(state="open")
-        # for issue in open_issues:
-        #     issues = str(issue.id) + " " + str(issue.state) + " " + str(issue.assignees)
-        #     print(issues + "\n")
-
-        # print("PULL REQUESTS\n")
-        # pulls = repo.get_pulls()
-        # for p in pulls:
-        #     print(p.state)
-        #     for c in p.get_review_comments():
-        #         print(c + "\n")
-
-
         print("END")
-    # s.close()
-    time_end = time()
-    print("Finished!")
-    time_elapsed = round((time_end - time_start) / 60, 2)
-    print("Elapsed time: " + str(time_elapsed) + " minutes")
+
+    # time_end = time()
+    # print("Finished!")
+    # project_elapsed_days = round((project_time_now - project_start) / 86400, 1)
+    # print("Project has been running for " + project_elapsed_days + " days")
 
 
 
