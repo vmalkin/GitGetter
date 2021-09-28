@@ -2,7 +2,8 @@
 # their contributors and their work. Data will be displayed graphically.
 import github.GithubException
 from github import Github
-from time import sleep
+from pprint import pprint
+
 
 
 with open("../git.token") as g:
@@ -23,7 +24,7 @@ repo_names = [
     ]
 
 def displayGroupMembers(repo):
-    print("###GROUP MEMBERS\n")
+    print("\n###GROUP MEMBERS")
     users = repo.get_contributors()
     for user in users:
         peeps = str(user) + " " + str(user.last_modified) + " " + str(user.name) + "\n"
@@ -32,55 +33,29 @@ def displayGroupMembers(repo):
 
 def displayMemberCommitsAllBranches(repo):
 
-    print("###COMMITS ALL BRANCHES\n")
+    print("\n###COMMITS ALL BRANCHES")
 
     # First get all branches for the repo
     branches = repo.get_branches()
     for branch in branches:
-        print("###BRANCH: " + branch.name + "\n")
+        print("\n###BRANCH: " + branch.name)
         commits = repo.get_commits(branch.name)
-        c = []
         try:
             for commit in commits:
                 header_keys = commit.raw_headers
                 # print(headerkeys)
-                linkname = "[" + str(commit.author) + "]"
+                if commit.author is None:
+                    author = "INVALID CONTRIBUTOR"
+                else:
+                    author = commit.author.login
+
+                linkname = "[" + author + "]"
                 linkurl = "(" + commit.html_url + ")"
                 url = linkname + linkurl
                 comms = [str(header_keys['last-modified']), url, str(commit.author)]
-                c.append(comms)
-
-            # sort on student login
-            c.sort(key=lambda c: (c[2], c[0]))
-            for item in c:
-                print("....-", item[0], item[1], item[2])
-
+                print(comms)
         except github.GithubException:
             print("Error: no commits")
-
-
-
-
-def displayMemberCommits(repo):
-    c = []
-    print("###COMMITS\n")
-    try:
-        commits = repo.get_commits()
-        for commit in commits:
-            header_keys = commit.raw_headers
-            # print(headerkeys)
-            linkname = "[" + str(commit.author) + "]"
-            linkurl = "(" + commit.html_url + ")"
-            url = linkname + linkurl
-            comms = [str(header_keys['last-modified']), url, str(commit.author)]
-            c.append(comms)
-    except github.GithubException:
-        print("Error: no commits")
-
-    # sort on student login
-    c.sort(key=lambda c: (c[2], c[0]))
-    for item in c:
-        print(item[0], item[1], item[2])
 
 
 def convertGMTtoNZ(timestring):
