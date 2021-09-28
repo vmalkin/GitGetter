@@ -2,7 +2,6 @@
 # their contributors and their work. Data will be displayed graphically.
 import github.GithubException
 from github import Github
-from pprint import pprint
 from time import sleep
 
 
