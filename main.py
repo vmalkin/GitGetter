@@ -30,35 +30,41 @@ if __name__ == '__main__':
         print("================== " + repo_name + " ==================\n")
         repo = g.get_repo(name)
 
-        print("OPEN ISSUES\n")
-        open_issues = repo.get_issues(state="open")
-        for issue in open_issues:
-            issues = str(issue.id) + " " + str(issue.state) + " " + str(issue.assignees)
-            print(issues + "\n")
+        # print("OPEN ISSUES\n")
+        # open_issues = repo.get_issues(state="open")
+        # for issue in open_issues:
+        #     issues = str(issue.id) + " " + str(issue.state) + " " + str(issue.assignees)
+        #     print(issues + "\n")
+        print("GROUP MEMBERS\n")
+        users = repo.get_contributors()
+        for user in users:
+            peeps = str(user) + " " +  str(user.last_modified) + " " +  str(user.name)
+            print(peeps)
 
+        c = []
         print("COMMITS\n")
         try:
             commits = repo.get_commits()
             for commit in commits:
                 header_keys = commit.raw_headers
                 # print(headerkeys)
-                comms = str(header_keys['last-modified']) + ", " + str(commit.html_url) + ", " + str(commit.author)
-                print(comms + "\n")
+                comms = [str(header_keys['last-modified']), str(commit.html_url), str(commit.author)]
+                c.append(comms)
         except github.GithubException:
             print("Error: no commits")
 
-        print("PULL REQUESTS\n")
-        pulls = repo.get_pulls()
-        for p in pulls:
-            print(p.state)
-            for c in p.get_review_comments():
-                print(c + "\n")
+            # sort on student login
+        c.sort(key=lambda c: c[2])
+        for item in c:
+            print(item)
 
-        print("GROUP MEMBERS\n")
-        users = repo.get_contributors()
-        for user in users:
-            peeps = str(user) + " " +  str(user.last_modified) + " " +  str(user.name)
-            print(peeps + "\n")
+        # print("PULL REQUESTS\n")
+        # pulls = repo.get_pulls()
+        # for p in pulls:
+        #     print(p.state)
+        #     for c in p.get_review_comments():
+        #         print(c + "\n")
+
 
         print("==================" + "END" + "==================\n\n")
     # s.close()
