@@ -123,15 +123,11 @@ if __name__ == '__main__':
         display_commits_all_branches(repo)
         # display_member_commit_times(repo)
 
-
         # print("OPEN ISSUES\n")
         # open_issues = repo.get_issues(state="open")
         # for issue in open_issues:
         #     issues = str(issue.id) + " " + str(issue.state) + " " + str(issue.assignees)
         #     print(issues + "\n")
-
-
-
 
         # print("PULL REQUESTS\n")
         # pulls = repo.get_pulls()
@@ -141,7 +137,7 @@ if __name__ == '__main__':
         #         print(c + "\n")
 
 
-        print("==================" + "END" + "==================\n\n")
+        print("END")
     # s.close()
     time_end = time()
     print("Finished!")
