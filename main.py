@@ -90,6 +90,7 @@ def convertGMTtoNZ(timestring):
 
 if __name__ == '__main__':
     # with open("Studio_2.txt", "w") as s:
+    print("Convert Markdown to HTML: https://dillinger.io/")
     for name in repo_names:
         repo_name = "http://github.com/" + name
         linkname = "[" + name + "]"
