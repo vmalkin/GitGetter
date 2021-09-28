@@ -22,6 +22,44 @@ repo_names = [
     "BIT-Studio-2/project-21s2-walkeez"
     ]
 
+def displayGroupMembers(repo):
+    print("###GROUP MEMBERS\n")
+    users = repo.get_contributors()
+    for user in users:
+        peeps = str(user) + " " + str(user.last_modified) + " " + str(user.name) + "\n"
+        print(peeps)
+
+
+def displayMemberCommitsAllBranches(repo):
+    pass
+
+
+def displayMemberCommits(repo):
+    c = []
+    print("###COMMITS\n")
+    try:
+        commits = repo.get_commits()
+        for commit in commits:
+            header_keys = commit.raw_headers
+            # print(headerkeys)
+            linkname = "[" + str(commit.author) + "]"
+            linkurl = "(" + commit.html_url + ")"
+            url = linkname + linkurl
+            comms = [str(header_keys['last-modified']), url, str(commit.author)]
+            c.append(comms)
+    except github.GithubException:
+        print("Error: no commits")
+
+    # sort on student login
+    c.sort(key=lambda c: (c[2], c[0]))
+    for item in c:
+        print(item[0], item[1], item[2])
+
+
+def convertGMTtoNZ(timestring):
+    # Timestring is GMT
+    timeformat = '%a, %d %b %Y %H:%M:%S GMT'
+
 
 if __name__ == '__main__':
     # with open("Studio_2.txt", "w") as s:
@@ -30,7 +68,7 @@ if __name__ == '__main__':
         linkname = "[" + name + "]"
         linkurl = "(" + repo_name + ")"
 
-        print("##" + linkname + linkurl + "\n")
+        print("##" + linkname + linkurl)
         repo = g.get_repo(name)
 
         # print("OPEN ISSUES\n")
@@ -38,31 +76,9 @@ if __name__ == '__main__':
         # for issue in open_issues:
         #     issues = str(issue.id) + " " + str(issue.state) + " " + str(issue.assignees)
         #     print(issues + "\n")
-        print("###GROUP MEMBERS\n")
-        users = repo.get_contributors()
-        for user in users:
-            peeps = str(user) + " " +  str(user.last_modified) + " " +  str(user.name) + "\n"
-            print(peeps)
 
-        c = []
-        print("###COMMITS\n")
-        try:
-            commits = repo.get_commits()
-            for commit in commits:
-                header_keys = commit.raw_headers
-                # print(headerkeys)
-                linkname = "[" + str(commit.author) + "]"
-                linkurl = "(" + commit.html_url + ")"
-                url = linkname + linkurl
-                comms = [str(header_keys['last-modified']),  url, str(commit.author)]
-                c.append(comms)
-        except github.GithubException:
-            print("Error: no commits")
 
-        # sort on student login
-        c.sort(key=lambda c: (c[2], c[0]))
-        for item in c:
-            print(item[0], item[1], item[2], "\n")
+
 
         # print("PULL REQUESTS\n")
         # pulls = repo.get_pulls()
