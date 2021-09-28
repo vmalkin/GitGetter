@@ -1,3 +1,2 @@
 # GitGetter
-Python script to parse github classroom repos for functional assessment, student evaluation. Uses the Gihub API
-
+Python script to parse github classroom repos for formative assessment, student evaluation. Uses the Gihub API
