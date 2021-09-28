@@ -4,6 +4,7 @@ import github.GithubException
 from github import Github
 from collections import Counter
 from time import time
+from plotly import graph_objects as go
 
 
 
@@ -24,16 +25,55 @@ repo_names = [
     "BIT-Studio-2/project-21s2-walkeez"
     ]
 
-def displayGroupMembers(repo):
+def display_group_members(repo):
     print("\n### GROUP MEMBERS")
     users = repo.get_contributors()
     for user in users:
-        peeps = str(user) + " " + str(user.last_modified) + " " + str(user.name) + "\n"
+        peeps = str(user) + " " + str(user.last_modified) + " " + str(user.name)
         print(peeps)
 
 
-def displayMemberCommitsAllBranches(repo):
+def display_commits_all_branches(repo):
+    print("---")
     print("\n### COMMITS ALL BRANCHES")
+    tally = []
+
+    # First get all branches for the repo
+    branches = repo.get_branches()
+    for branch in branches:
+        print("\n### BRANCH: " + branch.name)
+        commits = repo.get_commits(branch.name)
+        c = []
+        try:
+            for commit in commits:
+                header_keys = commit.raw_headers
+                # print(headerkeys)
+                if commit.author is None:
+                    author = "INVALID CONTRIBUTOR"
+                else:
+                    author = commit.author.login
+
+                tally.append(author)
+
+                linkname = "[" + author + "]"
+                linkurl = "(" + commit.html_url + ")"
+                url = linkname + linkurl
+                comms = [str(header_keys['last-modified']), url, str(commit.author)]
+                c.append(comms)
+        except github.GithubException:
+            print("Error: no commits")
+
+        sorted_commits = sorted(c, key=lambda c: (c[2], c[0]))
+        for cm in sorted_commits:
+            print(cm)
+
+    print("### TOTAL COMMITS BY CONTRIBUTORS")
+    print(Counter(tally))
+
+
+def display_member_commit_times(repo):
+    print("---")
+    print("\n### COMMIT FREQUENCY")
     tally = []
 
     # First get all branches for the repo
@@ -56,14 +96,9 @@ def displayMemberCommitsAllBranches(repo):
                 linkurl = "(" + commit.html_url + ")"
                 url = linkname + linkurl
                 comms = [str(header_keys['last-modified']), url, str(commit.author)]
-                print(comms)
-
         except github.GithubException:
             print("Error: no commits")
-    print("=============================================================")
-    print("\n### TOTAL COMMITS BY CONTRIBUTORS")
-    print(Counter(tally))
-    print("=============================================================")
+
 
 
 
@@ -84,8 +119,9 @@ if __name__ == '__main__':
         print("## " + linkname + linkurl)
         repo = g.get_repo(name)
 
-        displayGroupMembers(repo)
-        displayMemberCommitsAllBranches(repo)
+        display_group_members(repo)
+        display_commits_all_branches(repo)
+        # display_member_commit_times(repo)
 
 
         # print("OPEN ISSUES\n")
