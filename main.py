@@ -31,7 +31,30 @@ def displayGroupMembers(repo):
 
 
 def displayMemberCommitsAllBranches(repo):
-    pass
+    c = []
+    print("###COMMITS ALL BRANCHES\n")
+
+    # First get all branches for the repo
+    branches = repo.get_branches()
+    for branch in branches:
+        print("###BRANCH: " + branch.name + "\n")
+        commits = repo.get_commits(branch.name)
+        try:
+            for commit in commits:
+                header_keys = commit.raw_headers
+                # print(headerkeys)
+                linkname = "[" + str(commit.author) + "]"
+                linkurl = "(" + commit.html_url + ")"
+                url = linkname + linkurl
+                comms = [str(header_keys['last-modified']), url, str(commit.author)]
+                c.append(comms)
+        except github.GithubException:
+            print("Error: no commits")
+
+    # sort on student login
+    c.sort(key=lambda c: (c[2], c[0]))
+    for item in c:
+        print("....-", item[0], item[1], item[2])
 
 
 def displayMemberCommits(repo):
@@ -70,6 +93,10 @@ if __name__ == '__main__':
 
         print("##" + linkname + linkurl)
         repo = g.get_repo(name)
+
+        displayGroupMembers(repo)
+        displayMemberCommitsAllBranches(repo)
+
 
         # print("OPEN ISSUES\n")
         # open_issues = repo.get_issues(state="open")
