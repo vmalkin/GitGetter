@@ -7,6 +7,7 @@ from time import time
 import plotly.graph_objects as go
 import datetime
 import manager_group as mgr_group
+import manager_time
 import manager_time as mgr_time
 import manager_user_commits as mgr_commits
 
@@ -29,13 +30,10 @@ repo_names = [
     ]
 
 
-
-
-
 if __name__ == '__main__':
-    # project_start = "2020-09-13"
-    # project_start_posix = posix2utc(project_start, '%Y-%m-%d')
-    # project_time_now = time()
+    project_start = "2020-09-13"
+    project_start_posix = mgr_time.posix2utc(project_start, '%Y-%m-%d')
+    project_time_now = time()
 
     print("Convert Markdown to HTML: https://dillinger.io/")
     for name in repo_names:
@@ -46,20 +44,20 @@ if __name__ == '__main__':
         print("## " + linkname + linkurl)
         repo = g.get_repo(name)
 
-        display_group_members(repo)
-        display_summary_commits(repo)
-
-        display_commits_all_branches(repo)
-        # plotdata = display_member_commit_times(repo)
-        # plot_frequency(name, plotdata[0], plotdata[1])
+        # display_group_members(repo)
+        # display_summary_commits(repo)
+        #
+        # display_commits_all_branches(repo)
+        # # plotdata = display_member_commit_times(repo)
+        # # plot_frequency(name, plotdata[0], plotdata[1])
         print("END")
         print("---")
 
 
-    # time_end = time()
-    # print("Finished!")
-    # project_elapsed_days = round((project_time_now - project_start) / 86400, 1)
-    # print("Project has been running for " + project_elapsed_days + " days")
+    time_end = time()
+    print("Finished!")
+    project_elapsed_days = round((project_time_now - project_start) / 86400, 1)
+    print("Project has been running for " + project_elapsed_days + " days")
 
 
 
