@@ -1,8 +1,13 @@
-def display_summary_commits(repo):
-    tally = []
+from collections import Counter
+import github
+
+def display_branch_commits_summary(repo):
     # First get all branches for the repo
     branches = repo.get_branches()
+
     for branch in branches:
+        tally = []
+        print("### Summary of branch: " + branch.name)
         commits = repo.get_commits(branch.name)
         try:
             for commit in commits:
@@ -10,50 +15,38 @@ def display_summary_commits(repo):
                     author = "INVALID CONTRIBUTOR"
                 else:
                     author = commit.author.login
-
                 tally.append(author)
         except github.GithubException:
             print("Error: no commits")
 
-    print("### TOTAL COMMITS BY CONTRIBUTORS ACROSS ALL BRANCHES")
-
-    commit_summary = Counter(tally)
-    print("| Group Member | No of Commits |")
-    print("| --- | --- |")
-    for keys, values in commit_summary.items():
-        print("| " + keys + " | " + str(values) + " |")
+        commit_summary = Counter(tally)
+        print("| Group Member | No of Commits |")
+        print("| --- | --- |")
+        for keys, values in commit_summary.items():
+            print("| " + keys + " | " + str(values) + " |")
 
 
 def display_commits_all_branches(repo):
-    print("\n### COMMITS ALL BRANCHES")
-    tally = []
-
-    # First get all branches for the repo
     branches = repo.get_branches()
     for branch in branches:
         print("\n### BRANCH: " + branch.name)
         commits = repo.get_commits(branch.name)
-        c = []
-        try:
-            for commit in commits:
-                header_keys = commit.raw_headers
-                # print(headerkeys)
-                if commit.author is None:
-                    author = "INVALID CONTRIBUTOR"
-                else:
-                    author = commit.author.login
+        print("| Author | Date (UTC) | Link to commit")
+        print("| --- | --- |")
+        for c in commits:
+            header_keys = c.raw_headers
+            if c.author is None:
+                author = "INVALID CONTRIBUTOR"
+            else:
+                author = c.author.login
+            # print(c.raw_data["commit"])
+            commit_message = c.raw_data["commit"]["message"]
+            commit_url = c.html_url
+            commit_date = c.raw_data["commit"]["author"]["date"]
+            link = "[" + commit_message + "](" + commit_url + ")"
+            print("| " + author + " | " + commit_date +" | "+ link)
 
-                linkname = "[" + author + "]"
-                linkurl = "(" + commit.html_url + ")"
-                url = linkname + linkurl
-                comms = [str(header_keys['last-modified']), url, str(commit.author)]
-                c.append(comms)
-        except github.GithubException:
-            print("Error: no commits")
 
-        sorted_commits = sorted(c, key=lambda c: (c[2], c[0]))
-        for cm in sorted_commits:
-            print(cm)
 
 
 def display_member_commit_times(repo):

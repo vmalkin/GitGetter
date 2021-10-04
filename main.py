@@ -1,5 +1,7 @@
 # This script is designed to use the Github api to extract information about a series of repos,
 # their contributors and their work. Data will be displayed graphically.
+from pprint import pprint
+
 import github.GithubException
 from github import Github
 from collections import Counter
@@ -19,11 +21,11 @@ with open("../git.token") as g:
 g = Github(git_token)
 
 repo_names = [
-    "BIT-Studio-2/project-21s2-buddy-on-the-beach",
-    "BIT-Studio-2/project-21s2-ark-tech",
-    "BIT-Studio-2/project-21s2-beach-boys",
-    "BIT-Studio-2/project-21s2-beach-buddy",
-    "BIT-Studio-2/project-21s2-jackal",
+    # "BIT-Studio-2/project-21s2-buddy-on-the-beach",
+    # "BIT-Studio-2/project-21s2-ark-tech",
+    # "BIT-Studio-2/project-21s2-beach-boys",
+    # "BIT-Studio-2/project-21s2-beach-buddy",
+    # "BIT-Studio-2/project-21s2-jackal",
     "BIT-Studio-2/project-21s2-paw-patrol",
     "BIT-Studio-2/project-21s2-sea-dogs",
     "BIT-Studio-2/project-21s2-walkeez"
@@ -31,8 +33,8 @@ repo_names = [
 
 
 if __name__ == '__main__':
-    project_start = "2020-09-13"
-    project_start_posix = mgr_time.posix2utc(project_start, '%Y-%m-%d')
+    # project_start = "2020-09-13"
+    # project_start_posix = mgr_time.posix2utc(project_start, '%Y-%m-%d')
     project_time_now = time()
 
     print("Convert Markdown to HTML: https://dillinger.io/")
@@ -44,20 +46,26 @@ if __name__ == '__main__':
         print("## " + linkname + linkurl)
         repo = g.get_repo(name)
 
-        # display_group_members(repo)
-        # display_summary_commits(repo)
-        #
-        # display_commits_all_branches(repo)
-        # # plotdata = display_member_commit_times(repo)
-        # # plot_frequency(name, plotdata[0], plotdata[1])
+        mgr_group.display_group_members(repo, repo_name)
+        mgr_commits.display_branch_commits_summary(repo)
+        mgr_commits.display_commits_all_branches(repo)
+
+        # branches = repo.get_branches()
+        # for branch in branches:
+        #     print("\n### BRANCH: " + branch.name)
+        #     commits = repo.get_commits(branch.name)
+        #     for c in commits:
+        #         pprint(c.html_url)
+
+
         print("END")
         print("---")
 
 
-    time_end = time()
-    print("Finished!")
-    project_elapsed_days = round((project_time_now - project_start) / 86400, 1)
-    print("Project has been running for " + project_elapsed_days + " days")
+    # time_end = time()
+    # print("Finished!")
+    # project_elapsed_days = round((project_time_now - project_start) / 86400, 1)
+    # print("Project has been running for " + project_elapsed_days + " days")
 
 
 
