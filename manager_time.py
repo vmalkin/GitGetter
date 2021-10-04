@@ -1,12 +1,13 @@
 from datetime import datetime
+import calendar
 
-
-def gmt_to_posix(timestring):
+def utc2posix(utctime, timeformat):
     # Timestring is GMT
-    timeformat = '%a, %d %b %Y %H:%M:%S GMT'
+    # timeformat = '%a, %d %b %Y %H:%M:%S GMT'
+    date_obj = datetime.strptime(utctime, timeformat)
+    posixtime = round(calendar.timegm(date_obj.timetuple()), 0)
+    return posixtime
 
-def utc2posix():
-    pass
 
 def posix2utc(posixtime, timeformat):
     # '%Y-%m-%d %H:%M'

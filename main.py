@@ -27,14 +27,14 @@ repo_names = [
     # "BIT-Studio-2/project-21s2-beach-buddy",
     # "BIT-Studio-2/project-21s2-jackal",
     "BIT-Studio-2/project-21s2-paw-patrol",
-    "BIT-Studio-2/project-21s2-sea-dogs",
-    "BIT-Studio-2/project-21s2-walkeez"
+    # "BIT-Studio-2/project-21s2-sea-dogs",
+    # "BIT-Studio-2/project-21s2-walkeez"
     ]
 
 
 if __name__ == '__main__':
-    # project_start = "2020-09-13"
-    # project_start_posix = mgr_time.posix2utc(project_start, '%Y-%m-%d')
+    project_start = "2020-09-13"
+    project_start_posix = mgr_time.utc2posix(project_start, '%Y-%m-%d')
     project_time_now = time()
 
     print("Convert Markdown to HTML: https://dillinger.io/")
@@ -47,19 +47,15 @@ if __name__ == '__main__':
         repo = g.get_repo(name)
 
         mgr_group.display_group_members(repo, repo_name)
+        mgr_commits.display_user_commits_summary(repo)
+        print(" --- ")
+
         mgr_commits.display_branch_commits_summary(repo)
-        mgr_commits.display_commits_all_branches(repo)
-
-        # branches = repo.get_branches()
-        # for branch in branches:
-        #     print("\n### BRANCH: " + branch.name)
-        #     commits = repo.get_commits(branch.name)
-        #     for c in commits:
-        #         pprint(c.html_url)
-
-
-        print("END")
+        mgr_commits.display_all_commits_all_branches(repo)
         print("---")
+
+    print("END")
+
 
 
     # time_end = time()
