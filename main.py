@@ -13,6 +13,9 @@ import manager_time
 import manager_time as mgr_time
 import manager_user_commits as mgr_commits
 
+class Bin():
+    pass
+
 
 with open("../git.token") as g:
     for line in g:
@@ -36,7 +39,6 @@ if __name__ == '__main__':
     project_start = "2021-09-13"
     project_start_posix = mgr_time.utc2posix(project_start, '%Y-%m-%d')
     project_time_now = int(time())
-    print((project_time_now - project_start_posix) / 86400)
 
     print("Convert Markdown to HTML: https://dillinger.io/")
     for name in repo_names:
@@ -55,7 +57,8 @@ if __name__ == '__main__':
         # mgr_commits.display_all_commits_all_branches(repo)
         # print("---")
 
-
+    for d in range(project_start_posix, project_time_now):
+        pass
 
     branches = repo.get_branches()
     for branch in branches:
@@ -70,7 +73,6 @@ if __name__ == '__main__':
             commit_date = c.raw_data["commit"]["author"]["date"]
             posix_date = mgr_time.utc2posix(commit_date, "%Y-%m-%dT%H:%M:%SZ")
             print(author + "," + str(posix_date))
-
 
     print("END")
 
