@@ -13,9 +13,18 @@ import manager_time
 import manager_time as mgr_time
 import manager_user_commits as mgr_commits
 
-class Bin():
-    pass
-
+# class DataPoint():
+#     def __init__(self, datetime):
+#         self.datetime = datetime
+#         self.commit = False
+#
+# class Student():
+#     def __init__(self, name, binlist):
+#         self.name = name
+#         self.commit_frequency = binlist
+#
+#     def plot_commits(self):
+#         pass
 
 with open("../git.token") as g:
     for line in g:
@@ -34,6 +43,13 @@ repo_names = [
     # "BIT-Studio-2/project-21s2-walkeez"
     ]
 
+def get_index(starttime, finishtime, value):
+    t = None
+    binsize = 60 * 60
+    if value <= finishtime:
+        t = value - starttime
+        t = int(t / binsize)
+    return t
 
 if __name__ == '__main__':
     project_start = "2021-09-13"
@@ -48,17 +64,16 @@ if __name__ == '__main__':
 
         print("## " + linkname + linkurl)
         repo = g.get_repo(name)
-        #
+
         # mgr_group.display_group_members(repo, repo_name)
         # mgr_commits.display_user_commits_summary(repo)
         # print(" --- ")
-        #
+
         # mgr_commits.display_branch_commits_summary(repo)
         # mgr_commits.display_all_commits_all_branches(repo)
         # print("---")
 
-    for d in range(project_start_posix, project_time_now):
-        pass
+    
 
     branches = repo.get_branches()
     for branch in branches:
@@ -73,6 +88,8 @@ if __name__ == '__main__':
             commit_date = c.raw_data["commit"]["author"]["date"]
             posix_date = mgr_time.utc2posix(commit_date, "%Y-%m-%dT%H:%M:%SZ")
             print(author + "," + str(posix_date))
+
+
 
     print("END")
 
