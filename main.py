@@ -21,11 +21,11 @@ class DataPoint():
 class Student():
     def __init__(self, name, binlist):
         self.name = name
-        self.commit_frequency = binlist
+        self.commit_list = binlist
 
     def plot_commits(self):
-        for i in self.commit_frequency:
-            print(i.datetime)
+        for i in self.commit_list:
+            print(i.datetime, i.commit)
 
 with open("../git.token") as g:
     for line in g:
@@ -88,21 +88,27 @@ if __name__ == '__main__':
         for s in studentlist:
             s.plot_commits()
 
-    branches = repo.get_branches()
-    for branch in branches:
-        commits = repo.get_commits(branch.name)
-        for c in commits:
-            header_keys = c.raw_headers
-            if c.author is None:
-                author = "INVALID CONTRIBUTOR"
-            else:
-                author = c.author.login
+        branches = repo.get_branches()
+        for branch in branches:
+            commits = repo.get_commits(branch.name)
+            for c in commits:
+                header_keys = c.raw_headers
+                if c.author is None:
+                    author = "INVALID CONTRIBUTOR"
+                else:
+                    author = c.author.login
 
-            commit_date = c.raw_data["commit"]["author"]["date"]
-            posix_date = mgr_time.utc2posix(commit_date, "%Y-%m-%dT%H:%M:%SZ")
-            print(author + "," + str(posix_date))
+                    commit_date = c.raw_data["commit"]["author"]["date"]
+                    posix_date = mgr_time.utc2posix(commit_date, "%Y-%m-%dT%H:%M:%SZ")
 
-
+                    for s in studentlist:
+                        print(s.name)
+                        if s.name == author:
+                            index = get_index(project_start_posix, project_time_now, posix_date)
+                            s.commit_list[index].commit = True
+                    # print(author + "," + str(posix_date))
+        # for s in studentlist:
+        #     s.plot_commits()
 
     print("END")
 
