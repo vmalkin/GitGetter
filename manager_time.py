@@ -13,3 +13,4 @@ def posix2utc(posixtime, timeformat):
     # '%Y-%m-%d %H:%M'
     utctime = datetime.utcfromtimestamp(int(posixtime)).strftime(timeformat)
     return utctime
+

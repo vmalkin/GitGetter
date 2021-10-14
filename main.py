@@ -33,9 +33,10 @@ repo_names = [
 
 
 if __name__ == '__main__':
-    project_start = "2020-09-13"
+    project_start = "2021-09-13"
     project_start_posix = mgr_time.utc2posix(project_start, '%Y-%m-%d')
-    project_time_now = time()
+    project_time_now = int(time())
+    print((project_time_now - project_start_posix) / 86400)
 
     print("Convert Markdown to HTML: https://dillinger.io/")
     for name in repo_names:
@@ -45,14 +46,16 @@ if __name__ == '__main__':
 
         print("## " + linkname + linkurl)
         repo = g.get_repo(name)
+        #
+        # mgr_group.display_group_members(repo, repo_name)
+        # mgr_commits.display_user_commits_summary(repo)
+        # print(" --- ")
+        #
+        # mgr_commits.display_branch_commits_summary(repo)
+        # mgr_commits.display_all_commits_all_branches(repo)
+        # print("---")
 
-        mgr_group.display_group_members(repo, repo_name)
-        mgr_commits.display_user_commits_summary(repo)
-        print(" --- ")
 
-        mgr_commits.display_branch_commits_summary(repo)
-        mgr_commits.display_all_commits_all_branches(repo)
-        print("---")
 
     print("END")
 
