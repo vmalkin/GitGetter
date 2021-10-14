@@ -1,4 +1,5 @@
 from collections import Counter
+from plotly import graph_objects as go
 import github
 
 def display_user_commits_summary(repo):
