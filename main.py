@@ -13,18 +13,19 @@ import manager_time
 import manager_time as mgr_time
 import manager_user_commits as mgr_commits
 
-# class DataPoint():
-#     def __init__(self, datetime):
-#         self.datetime = datetime
-#         self.commit = False
-#
-# class Student():
-#     def __init__(self, name, binlist):
-#         self.name = name
-#         self.commit_frequency = binlist
-#
-#     def plot_commits(self):
-#         pass
+class DataPoint():
+    def __init__(self, datetime):
+        self.datetime = datetime
+        self.commit = False
+
+class Student():
+    def __init__(self, name, binlist):
+        self.name = name
+        self.commit_frequency = binlist
+
+    def plot_commits(self):
+        for i in self.commit_frequency:
+            print(i.datetime)
 
 with open("../git.token") as g:
     for line in g:
@@ -72,8 +73,20 @@ if __name__ == '__main__':
         # mgr_commits.display_branch_commits_summary(repo)
         # mgr_commits.display_all_commits_all_branches(repo)
         # print("---")
+        binlist = []
+        for i in range(project_start_posix, project_time_now, (60*60)):
+            binlist.append(DataPoint(i))
 
-    
+        studentlist = []
+        users = repo.get_contributors()
+        for user in users:
+            if user.name is None:
+                username = "No name in github account"
+            else:
+                studentlist.append(Student(user.name, binlist))
+
+        for s in studentlist:
+            s.plot_commits()
 
     branches = repo.get_branches()
     for branch in branches:
