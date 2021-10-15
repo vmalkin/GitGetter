@@ -12,20 +12,9 @@ import manager_group as mgr_group
 import manager_time
 import manager_time as mgr_time
 import manager_user_commits as mgr_commits
+import manager_commit_frequency as mgr_freq
 
-class DataPoint():
-    def __init__(self, datetime):
-        self.datetime = datetime
-        self.commit = False
 
-class Student():
-    def __init__(self, name, binlist):
-        self.name = name
-        self.commit_list = binlist
-
-    def plot_commits(self):
-        for i in self.commit_list:
-            print(i.datetime, i.commit)
 
 with open("../git.token") as g:
     for line in g:
@@ -44,13 +33,7 @@ repo_names = [
     # "BIT-Studio-2/project-21s2-walkeez"
     ]
 
-def get_index(starttime, finishtime, value):
-    t = None
-    binsize = 60 * 60
-    if value <= finishtime:
-        t = value - starttime
-        t = int(t / binsize)
-    return t
+
 
 if __name__ == '__main__':
     project_start = "2021-09-13"
@@ -68,47 +51,13 @@ if __name__ == '__main__':
 
         # mgr_group.display_group_members(repo, repo_name)
         # mgr_commits.display_user_commits_summary(repo)
+        mgr_freq.wrapper(project_start_posix, project_time_now, repo)
         # print(" --- ")
 
         # mgr_commits.display_branch_commits_summary(repo)
         # mgr_commits.display_all_commits_all_branches(repo)
         # print("---")
-        binlist = []
-        for i in range(project_start_posix, project_time_now, (60*60)):
-            binlist.append(DataPoint(i))
 
-        studentlist = []
-        users = repo.get_contributors()
-        for user in users:
-            if user.name is None:
-                username = "No name in github account"
-            else:
-                studentlist.append(Student(user.name, binlist))
-
-        for s in studentlist:
-            s.plot_commits()
-
-        branches = repo.get_branches()
-        for branch in branches:
-            commits = repo.get_commits(branch.name)
-            for c in commits:
-                header_keys = c.raw_headers
-                if c.author is None:
-                    author = "INVALID CONTRIBUTOR"
-                else:
-                    author = c.author.login
-
-                    commit_date = c.raw_data["commit"]["author"]["date"]
-                    posix_date = mgr_time.utc2posix(commit_date, "%Y-%m-%dT%H:%M:%SZ")
-
-                    for s in studentlist:
-                        print(s.name)
-                        if s.name == author:
-                            index = get_index(project_start_posix, project_time_now, posix_date)
-                            s.commit_list[index].commit = True
-                    # print(author + "," + str(posix_date))
-        # for s in studentlist:
-        #     s.plot_commits()
 
     print("END")
 
