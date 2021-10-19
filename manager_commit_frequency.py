@@ -33,10 +33,10 @@ def wrapper(project_start_posix, project_time_now, repo):
     studentlist = []
     users = repo.get_contributors()
     for user in users:
-        if user.name is None:
+        if user.login is None:
             username = "No name in github account"
         else:
-            studentlist.append(Student(user.name, binlist))
+            studentlist.append(Student(user.login, binlist))
 
     branches = repo.get_branches()
     for branch in branches:
@@ -52,7 +52,10 @@ def wrapper(project_start_posix, project_time_now, repo):
 
                 for s in studentlist:
                     if s.name == author:
-                        print(s.name)
                         index = get_index(project_start_posix, project_time_now, posix_date)
                         s.commit_list[index].commit = True
-                # print(author + "," + str(posix_date))
+
+    for s in studentlist:
+        for data in s.commit_list:
+            for item in data:
+                print(item)
