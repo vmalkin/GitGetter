@@ -1,5 +1,6 @@
 import manager_time as mgr_time
 import numpy as np
+import plotly.graph_objects as go
 
 
 class DataPoint():
@@ -27,7 +28,10 @@ def get_index(starttime, finishtime, value):
 
 
 def plot(studentname, dates, data):
-    pass
+    plotdata = go.Bar(name=studentname, x=dates, y=data)
+    fig = go.Figure(plotdata)
+    savefile = studentname + ".jpg"
+    fig.write_image(file=savefile, format="jpg")
 
 def wrapper(project_start_posix, project_time_now, repo):
     binlist = []
@@ -61,8 +65,16 @@ def wrapper(project_start_posix, project_time_now, repo):
                         s.commit_list[index].commit = True
 
     for s in studentlist:
+        datetimes = None
+        commitdata = None
         for data in s.commit_list:
             datetimes = np.array(data.datetime)
             commitdata = np.array(data.commit)
 
-        plot(s.name, datetimes, commitdata)
+        utc = []
+        for i in datetimes:
+            d = mgr_time.posix2utc(i, "%Y-%m-%d %H:%M")
+            print(d)
+            utc.append(d)
+
+        plot(s.name, utc, commitdata)
