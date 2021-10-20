@@ -1,4 +1,5 @@
 import manager_time as mgr_time
+import numpy as np
 
 
 class DataPoint():
@@ -25,10 +26,14 @@ def get_index(starttime, finishtime, value):
     return t
 
 
+def plot(dates, data):
+    pass
+
 def wrapper(project_start_posix, project_time_now, repo):
     binlist = []
     for i in range(project_start_posix, project_time_now, (60 * 60)):
-        binlist.append(DataPoint(i))
+        d = DataPoint(i)
+        binlist.append(d)
 
     studentlist = []
     users = repo.get_contributors()
@@ -57,5 +62,4 @@ def wrapper(project_start_posix, project_time_now, repo):
 
     for s in studentlist:
         for data in s.commit_list:
-            for item in data:
-                print(item)
+            print(data.commit)
