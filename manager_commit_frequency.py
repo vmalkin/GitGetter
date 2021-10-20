@@ -26,7 +26,7 @@ def get_index(starttime, finishtime, value):
     return t
 
 
-def plot(dates, data):
+def plot(studentname, dates, data):
     pass
 
 def wrapper(project_start_posix, project_time_now, repo):
@@ -62,4 +62,7 @@ def wrapper(project_start_posix, project_time_now, repo):
 
     for s in studentlist:
         for data in s.commit_list:
-            print(data.commit)
+            datetimes = np.array(data.datetime)
+            commitdata = np.array(data.commit)
+
+        plot(s.name, datetimes, commitdata)
