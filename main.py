@@ -33,6 +33,12 @@ repo_names = [
     # "BIT-Studio-2/project-21s2-walkeez"
     ]
 
+def get_index(start_posix, value_posix):
+    # returns an integer value for an index, in one hour blocks
+    index = int((value_posix - start_posix) / 3600)
+    return index
+    
+
 
 
 if __name__ == '__main__':
@@ -55,6 +61,13 @@ if __name__ == '__main__':
         #
         # mgr_commits.display_all_commits_all_branches(repo)
         # print("---")
+        date_time_range = []
+        for i in range(project_start_posix, project_time_now, 3600):
+            utc_time = mgr_time.posix2utc(i, '%Y-%m-%d %H:%M')
+            commit = False
+            dp = [utc_time, commit]
+            date_time_range.append(dp)
+
         main_commits = repo.get_commits("main")
         users = repo.get_contributors()
         for user in users:
