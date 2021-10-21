@@ -51,10 +51,8 @@ if __name__ == '__main__':
 
         mgr_group.display_group_members(repo, repo_name)
         mgr_commits.display_main_commits(repo)
-
         print(" --- ")
 
-        mgr_commits.display_branch_commits_summary(repo)
         mgr_commits.display_all_commits_all_branches(repo)
         print("---")
         # j = repo.get_commit("d956e8ebbabfc75e6bc325d4982857313ce550db")
