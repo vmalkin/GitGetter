@@ -28,8 +28,8 @@ repo_names = [
     # "BIT-Studio-2/project-21s2-beach-boys",
     # "BIT-Studio-2/project-21s2-beach-buddy",
     # "BIT-Studio-2/project-21s2-jackal",
-    "BIT-Studio-2/project-21s2-paw-patrol",
-    # "BIT-Studio-2/project-21s2-sea-dogs",
+    # "BIT-Studio-2/project-21s2-paw-patrol",
+    "BIT-Studio-2/project-21s2-sea-dogs",
     # "BIT-Studio-2/project-21s2-walkeez"
     ]
 
@@ -49,15 +49,16 @@ if __name__ == '__main__':
         print("## " + linkname + linkurl)
         repo = g.get_repo(name)
 
-        # mgr_group.display_group_members(repo, repo_name)
-        # mgr_commits.display_user_commits_summary(repo)
-        mgr_freq.wrapper(project_start_posix, project_time_now, repo)
+        mgr_group.display_group_members(repo, repo_name)
+        mgr_commits.display_main_commits(repo)
+        # mgr_freq.wrapper(project_start_posix, project_time_now, repo)
         # print(" --- ")
 
         # mgr_commits.display_branch_commits_summary(repo)
         # mgr_commits.display_all_commits_all_branches(repo)
         # print("---")
-
+        # j = repo.get_commit("d956e8ebbabfc75e6bc325d4982857313ce550db")
+        # print(j.author.login, j.html_url, j.commit.message.strip("\r"), j.commit.last_modified)
 
     print("END")
 
