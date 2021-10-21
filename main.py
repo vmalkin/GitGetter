@@ -37,7 +37,7 @@ def get_index(start_posix, value_posix):
     # returns an integer value for an index, in one hour blocks
     index = int((value_posix - start_posix) / 3600)
     return index
-    
+
 
 
 
@@ -73,8 +73,10 @@ if __name__ == '__main__':
         for user in users:
             if user.name is None:
                 username = "No name in github account"
+                break
             else:
                 username = user.name
+
 
 
 
