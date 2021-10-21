@@ -14,6 +14,8 @@ def display_main_commits(repo):
 
 
 def plot_commit_frequency(project_start_posix, project_time_now, repo):
+    pass
+
 
     main_commits = repo.get_commits("main")
     commitlist = []

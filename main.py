@@ -48,17 +48,24 @@ if __name__ == '__main__':
 
         print("## " + linkname + linkurl)
         repo = g.get_repo(name)
+        #
+        # mgr_group.display_group_members(repo, repo_name)
+        # mgr_commits.display_main_commits(repo)
+        # print(" --- ")
+        #
+        # mgr_commits.display_all_commits_all_branches(repo)
+        # print("---")
+        main_commits = repo.get_commits("main")
+        users = repo.get_contributors()
+        for user in users:
+            if user.name is None:
+                username = "No name in github account"
+            else:
+                username = user.name
 
-        mgr_group.display_group_members(repo, repo_name)
-        mgr_commits.display_main_commits(repo)
-        print(" --- ")
 
-        mgr_commits.display_all_commits_all_branches(repo)
-        print("---")
-        # j = repo.get_commit("d956e8ebbabfc75e6bc325d4982857313ce550db")
-        # print(j.author.login, j.html_url, j.commit.message.strip("\r"), j.commit.last_modified)
 
-    print("END")
+print("END")
 
 
 
