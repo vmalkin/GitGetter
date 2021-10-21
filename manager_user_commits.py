@@ -14,3 +14,6 @@ def display_main_commits(repo):
     commitlist.sort()
     for item in commitlist:
         print(item)
+
+def plot_commit_frequency(repo):
+    pass
