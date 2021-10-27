@@ -39,8 +39,6 @@ def get_index(start_posix, value_posix):
     return index
 
 
-
-
 if __name__ == '__main__':
     project_start = "2021-09-13"
     project_start_posix = mgr_time.utc2posix(project_start, '%Y-%m-%d')
@@ -55,27 +53,28 @@ if __name__ == '__main__':
         print("## " + linkname + linkurl)
         repo = g.get_repo(name)
         #
-        # mgr_group.display_group_members(repo, repo_name)
-        # mgr_commits.display_main_commits(repo)
+        mgr_group.display_group_members(repo, repo_name)
+        mgr_commits.display_main_commits(repo)
+        # mgr_commits.plot_commit_frequency(project_start_posix, project_time_now, repo)
         # print(" --- ")
         #
         # mgr_commits.display_all_commits_all_branches(repo)
         # print("---")
-        date_time_range = []
-        for i in range(project_start_posix, project_time_now, 3600):
-            utc_time = mgr_time.posix2utc(i, '%Y-%m-%d %H:%M')
-            commit = False
-            dp = [utc_time, commit]
-            date_time_range.append(dp)
+
+
+
+
 
         main_commits = repo.get_commits("main")
-        users = repo.get_contributors()
-        for user in users:
-            if user.name is None:
-                username = "No name in github account"
-                break
-            else:
-                username = user.name
+        commitlist = []
+        for item in main_commits:
+            j = repo.get_commit(item.sha)
+            dp = [j.author.login, j.html_url, j.commit.message.strip("\n"), j.commit.committer.name,
+                  j.commit.last_modified]
+            commitlist.append(dp)
+        commitlist.sort()
+        for item in commitlist:
+            print(item)
 
 
 
