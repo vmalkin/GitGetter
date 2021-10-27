@@ -12,6 +12,6 @@ def display_group_members(repo, repo_link):
 
         commits_url = repo_link + "/commits?author=" + user.login
 
-        peeps = "| " + str(user.login) + " | " + str(username) + " | " + commits_url
+        peeps = "| " + str(user.login) + " | " + str(username) + " | " + "[Link](" + commits_url + ") |"
         print(peeps)
 
