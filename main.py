@@ -61,10 +61,6 @@ if __name__ == '__main__':
         # mgr_commits.display_all_commits_all_branches(repo)
         # print("---")
 
-
-
-
-
         main_commits = repo.get_commits("main")
         commitlist = []
         for item in main_commits:
