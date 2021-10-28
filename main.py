@@ -22,14 +22,14 @@ with open("../git.token") as g:
 g = Github(git_token)
 
 repo_names = [
-    # "BIT-Studio-2/project-21s2-buddy-on-the-beach",
-    # "BIT-Studio-2/project-21s2-ark-tech",
-    # "BIT-Studio-2/project-21s2-beach-boys",
-    # "BIT-Studio-2/project-21s2-beach-buddy",
-    # "BIT-Studio-2/project-21s2-jackal",
-    # "BIT-Studio-2/project-21s2-paw-patrol",
+    "BIT-Studio-2/project-21s2-buddy-on-the-beach",
+    "BIT-Studio-2/project-21s2-ark-tech",
+    "BIT-Studio-2/project-21s2-beach-boys",
+    "BIT-Studio-2/project-21s2-beach-buddy",
+    "BIT-Studio-2/project-21s2-jackal",
+    "BIT-Studio-2/project-21s2-paw-patrol",
     "BIT-Studio-2/project-21s2-sea-dogs",
-    # "BIT-Studio-2/project-21s2-walkeez"
+    "BIT-Studio-2/project-21s2-walkeez"
     ]
 
 def get_index(start_posix, value_posix):
