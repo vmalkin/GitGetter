@@ -5,8 +5,7 @@ from pprint import pprint
 import github.GithubException
 from github import Github
 from collections import Counter
-from time import time
-import plotly.graph_objects as go
+import time
 import datetime
 import manager_group as mgr_group
 import manager_time
@@ -42,7 +41,9 @@ def get_index(start_posix, value_posix):
 if __name__ == '__main__':
     project_start = "2021-09-13"
     project_start_posix = mgr_time.utc2posix(project_start, '%Y-%m-%d')
-    project_time_now = int(time())
+    project_time_now = int(time.time())
+
+
 
     print("Convert Markdown to HTML: https://dillinger.io/")
 
@@ -53,16 +54,17 @@ if __name__ == '__main__':
         linkurl = "(" + repo_name + ")"
         print("## " + linkname + linkurl)
         repo = g.get_repo(name)
+
+        # rate_limit = Github.get_rate_limit(repo)
+        # rl_search = rate_limit.search
+        # print(mgr_time.posix2utc(rl_search, '%Y-%m-%d %H:%M'))
+
         mgr_group.display_group_members(repo, repo_name)
         mgr_commits.display_main_commits(repo)
-    print(" --- ")
 
-    print("## Detailed Repo Stats")
-    for name in repo_names:
-        repo = g.get_repo(name)
-        mgr_commits.plot_commit_frequency(project_start_posix, project_time_now, repo)
+        print("## Detailed Repo Stats")
+        # mgr_commits.plot_commit_frequency(project_start_posix, project_time_now, repo)
         print(" --- ")
-
         mgr_commits.display_all_commits_all_branches(repo)
         print("---")
 

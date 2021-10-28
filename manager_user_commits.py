@@ -25,16 +25,17 @@ def plot_commit_frequency(project_start_posix, project_time_now, repo):
         print(item)
 
 def strip_message(message):
-    message = message.strip(" \n")
-    message = message.strip(" ")
+    filtered_chars  = list(s for s in message if s.isprintable())
+    message = "".join(filtered_chars)
     return message
 
 def display_all_commits_all_branches(repo):
     branches = repo.get_branches()
 
     for branch in branches:
-        print("### " + branch.name)
+        print("\n### " + branch.name)
         print("| Author | Commit Msg | Committer Name | Last Modified | Link to Commit |")
+        print("| --- | --- | --- | --- | --- |")
         commits = repo.get_commits(branch.name)
         commitlist = []
         for item in commits:
