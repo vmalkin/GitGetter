@@ -51,21 +51,18 @@ if __name__ == '__main__':
         repo_name = "http://github.com/" + name
         linkname = "[" + name + "]"
         linkurl = "(" + repo_name + ")"
-
-    print("## User and Commit Details:")
-    for name in repo_names:
-        repo_name = "http://github.com/" + name
-        linkname = "[" + name + "]"
-        linkurl = "(" + repo_name + ")"
-
         print("## " + linkname + linkurl)
         repo = g.get_repo(name)
-        #
         mgr_group.display_group_members(repo, repo_name)
-        # mgr_commits.display_main_commits(repo)
-        # mgr_commits.plot_commit_frequency(project_start_posix, project_time_now, repo)
+        mgr_commits.display_main_commits(repo)
+    print(" --- ")
+
+    print("## Detailed Repo Stats")
+    for name in repo_names:
+        repo = g.get_repo(name)
+        mgr_commits.plot_commit_frequency(project_start_posix, project_time_now, repo)
         print(" --- ")
-        #
+
         mgr_commits.display_all_commits_all_branches(repo)
         print("---")
 
