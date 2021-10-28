@@ -45,6 +45,14 @@ if __name__ == '__main__':
     project_time_now = int(time())
 
     print("Convert Markdown to HTML: https://dillinger.io/")
+
+    print("## Quick link to repos:")
+    for name in repo_names:
+        repo_name = "http://github.com/" + name
+        linkname = "[" + name + "]"
+        linkurl = "(" + repo_name + ")"
+
+    print("## User and Commit Details:")
     for name in repo_names:
         repo_name = "http://github.com/" + name
         linkname = "[" + name + "]"
