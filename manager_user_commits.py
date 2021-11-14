@@ -46,3 +46,7 @@ def display_all_commits_all_branches(repo):
         commitlist.sort()
         for item in commitlist:
             print(item)
+
+
+    def display_users_commits_all_branches(repo):
+        pass
