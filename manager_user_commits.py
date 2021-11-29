@@ -6,8 +6,8 @@ def display_main_commits(repo):
     namelist = []
     for item in main_commits:
         j = repo.get_commit(item.sha)
-        # if j.commit.committer.name != "GitHub":
-        namelist.append(j.author.login)
+        if j.commit.committer.name != "GitHub":
+            namelist.append(j.author.login)
     j = Counter(namelist)
     for key, value in j.items():
         print(key, value)
